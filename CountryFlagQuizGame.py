@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import messagebox
 import random
 from tkinter.simpledialog import askstring
+import sqlClass #SQL
 
 #This dictionary contains pairs (country name, country flag png)
 country_dict = {
@@ -265,9 +266,9 @@ country_png_name = None
 image_gui_widget = None
 answer_comparison = None #compares selected button text with right answer
 score_count = 0 #increases per correct answer
-question_count = 0 #increases per answer
+question_count = 0 #increases per answer, so when question_count == qustion_limit game ends
 question_limit = 5 #when question_count reaches limit, game ends
-
+leaderboard = sqlClass.gameLeaderboard('CountryFlagQuizGame') #SQL
 #Updates country selection
 def update_country_selection():
     while True:
@@ -380,6 +381,9 @@ def click(country_guess_parameter): #function to see if answer to question is ri
 
 
         if question_count == question_limit: #Ends program when no more questions are left
+            
+            leaderboard.add_entry(username, score_count) #SQL
+            
             root.withdraw()
 
             win = tk.Toplevel(height=300,width=500)
