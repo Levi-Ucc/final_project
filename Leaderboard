@@ -1,0 +1,13 @@
+import sqlClass 
+game_name = input('Name of game: ')
+def create_leaderboard(game_name): 
+  leaderboard = sqlClass.gameLeaderboard(game_name)
+  entries = leaderboard.get_top_entries() 
+  for entry in entries: 
+    print(f'{entry[1]} - {entry[2]} points')
+def display_leaderboard(leaderboard): 
+  entries = leaderboard.get_top_entries(10)
+  print('Top 10 Entries:') 
+  for entry in entries: 
+    print(f'{entry[1]} - {entry[2]} points')
+create_leaderboard(game_name)
